@@ -4,8 +4,7 @@ To do:
 - Fix sending from the client to the server
 
 Notes:
-When the server sends messages to the client, it is somehow converted to an int instead of being kept as the raw string
-When the client sends messages to the server, there is no effect
+When the client sends a message to the server, the message appears on the server but not on the client
 */
 
 import processing.net.*;

@@ -31,8 +31,8 @@ void draw() {
   line(0, height*3/4, width, height*3/4);
   message.getMessage();
   message.show();
-  message.type();
   message.oldMessages();
+  message.type();
 }
 
 class Message {
@@ -79,6 +79,7 @@ class Message {
     Client client = server.available();
     if(client != null) {
       savedMessage[0] = client.readString();
+      server.write(savedMessage[0]);
     }
   }
   

@@ -1,7 +1,8 @@
+// This is NOT the file in the Git Repo
 // Client application
 /*
 To do:
-- Fix sending from the client to the server
+<see server>
 
 Notes:
 When the client sends a message to the server, the message appears on the server but not on the client

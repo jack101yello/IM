@@ -2,6 +2,7 @@
 /*
 To do:
 - Fix sending from the client to the server
+  - The message doesn't print to the server
 
 Notes:
 I've removed logged messages so that only one will appear onscreen
@@ -15,6 +16,7 @@ Message message;
 
 // The 5 logged messages
 String[] savedMessage = new String[5];
+String tempSave;
 
 void setup() {
   size(640, 360);
@@ -31,8 +33,8 @@ void draw() {
   line(0, height*3/4, width, height*3/4);
   message.getMessage();
   message.show();
-  message.oldMessages();
   message.type();
+  message.oldMessages();
 }
 
 class Message {
@@ -78,8 +80,11 @@ class Message {
   void getMessage() {
     Client client = server.available();
     if(client != null) {
-      savedMessage[0] = client.readString();
-      server.write(savedMessage[0]);
+      tempSave = client.readString();
+      if(savedMessage[0] != tempSave) {
+        savedMessage[0] = tempSave;
+        send();
+      }
     }
   }
   

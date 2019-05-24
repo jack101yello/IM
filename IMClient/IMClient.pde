@@ -2,7 +2,7 @@
 // Client application
 /*
 To do:
-<see server>
+- Have user type in the IP they're trying to connect to
 
 Notes:
 When the client sends a message to the server, the message appears on the server but not on the client
@@ -11,6 +11,7 @@ When the client sends a message to the server, the message appears on the server
 import processing.net.*;
 Client client;
 String IP;
+boolean loggedIn;
 
 Message message;
 
@@ -19,22 +20,38 @@ String[] savedMessage = new String[5];
 
 void setup() {
   size(640, 320);
-  IP = "10.62.1.94";
-  client = new Client(this, IP, 4444);
+  loggedIn = false;
   message = new Message();
   for(int i = 0; i < savedMessage.length; i++) {
     savedMessage[i] = " ";
   }
 }
 
+void signIn() {
+  text("What IP would you like to connect to?", width/2, height/2);
+  message.show();
+  message.type();
+  if(key == ENTER || key == RETURN) {
+    IP = message.messStr;
+    message.mess = subset(message.mess, 0, 0);
+    client = new Client(this, IP, 4444);
+    loggedIn = true;
+  }
+}
+
 void draw() {
   background(255);
   stroke(0);
-  line(0, height*3/4, width, height*3/4);
-  message.show();
-  message.type();
-  message.setMessage();
-  message.oldMessages();
+  if(!loggedIn) {
+    signIn();
+  }
+  else {
+    line(0, height*3/4, width, height*3/4);
+    message.show();
+    message.type();
+    message.setMessage();
+    message.oldMessages();
+  }
 }
 
 class Message {
@@ -56,9 +73,11 @@ class Message {
         mess = subset(mess, 0, mess.length - 2);
       }
       else if((key == ENTER || key == RETURN) && mess.length - 1 > 0) {
-        sendToServer();
-        mess = subset(mess, 0, 0);
-      key = '_';
+        if(loggedIn) { // The enter key should run the login method if the user is not signed-in yet.
+          sendToServer();
+          mess = subset(mess, 0, 0);
+          key = '_';
+        }
       }
     }
   }

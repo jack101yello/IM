@@ -19,7 +19,7 @@ Message message;
 String[] savedMessage = new String[5];
 
 void setup() {
-  size(640, 320);
+  fullScreen();
   loggedIn = false;
   message = new Message();
   for(int i = 0; i < savedMessage.length; i++) {

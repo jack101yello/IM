@@ -19,7 +19,7 @@ String[] savedMessage = new String[5];
 String tempSave;
 
 void setup() {
-  size(640, 360);
+  fullScreen();
   server = new Server(this, 4444); // Creates a new server on port 4444
   message = new Message();
   for(int i = 0; i < savedMessage.length; i++) {
